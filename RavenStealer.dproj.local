@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025/07/13 22:44:24.220,=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/07/13 22:44:29.972,C:\Users\Meret\Documents\Embarcadero\Studio\Projects\RavenStealer.dproj=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2025/07/13 22:44:36.616,C:\Users\Meret\Documents\Embarcadero\Studio\Projects\RavenStealerMain.pas=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/07/13 22:44:36.616,C:\Users\Meret\Documents\Embarcadero\Studio\Projects\RavenStealerMain.dfm=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2025/07/13 22:44:50.858,C:\Users\Meret\Desktop\ravenstealer\RavenStealerMain.pas=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\RavenStealerMain.pas</Transaction>
+    <Transaction>2025/07/13 22:44:50.858,C:\Users\Meret\Desktop\ravenstealer\RavenStealerMain.dfm=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\RavenStealerMain.dfm</Transaction>
+    <Transaction>2025/07/13 22:44:52.375,C:\Users\Meret\Desktop\ravenstealer\RavenStealer.dproj=C:\Users\Meret\Documents\Embarcadero\Studio\Projects\RavenStealer.dproj</Transaction>
+    <Transaction>2025/07/14 00:01:30.870,=C:\Users\Meret\Desktop\ravenstealer\RavenStub.exe</Transaction>
+    <Transaction>2025/07/14 01:04:19.507,C:\Users\Meret\Desktop\ravenstealer\RavenStub.exe=</Transaction>
+    <Transaction>2025/07/14 01:04:19.591,=C:\Users\Meret\Desktop\ravenstealer\x64\Release\RavenStealer.exe</Transaction>
+  </Transactions>
+</BorlandProject>
